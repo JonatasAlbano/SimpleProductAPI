@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Post Product</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+<script type="text/javascript">
+	var app = angular.module('postserviceApp', []);
+	app.controller('postserviceCtrl', function($scope, $http) {
+		$scope.description = null;
+		$scope.postproduct = function(description, type) {
+			var imageObj = {
+					type : type
+			}
+			var product = {
+				description : description,
+				images :[ imageObj ]
+			};
+			$http.post('http://localhost:8080/AvenueTask/rest/api/createProduct', JSON.stringify(product)).then(
+					function(response) {
+						
+					}, function(response) {
+						console.log(JSON.stringify(product))
+					});
+		};
+	});
+</script>
+</head>
+<body>
+	<div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+		<div>
+			Description : <input ng-model="description" /><br />
+			Type : <input ng-model="type" /><br />
+			<br /> <input type="button" value="Send"
+				ng-click="postproduct(description, type)" /> <br />
+			<br />
+		</div>
+	</div>
+</body>
+</html>

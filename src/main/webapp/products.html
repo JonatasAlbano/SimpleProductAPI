@@ -1,0 +1,23 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+myApp.controller('GreetingController', ['$scope', '$http', function($scope, $http) {
+  $http({
+	  method: 'GET',
+	  url: 'http://localhost:8080/AvenueTask/rest/api/list/products/'
+	}).then(function successCallback(response) {
+	   $scope.result = response.data	
+	  }, function errorCallback(response) {
+	  });
+}]);
+</script>
+<div ng-app="myApp" ng-controller="GreetingController">
+	<div ng-repeat="products in result">
+		<div ng-repeat="innerProduct in products">
+			<h1>{{innerProduct.id}}</h1>
+			<p>{{innerProduct.description}}</p>
+			<hr>
+		</div>
+	</div>
+</div>
